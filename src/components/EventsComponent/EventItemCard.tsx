@@ -1,6 +1,6 @@
-import { Card, Row } from "antd";
+import { Card } from "antd";
 import React, { FC, useState } from "react";
-import { EventItemComponentProps } from "./types";
+import { EventItemComponentProps, EventTypes } from "./types";
 import { EditDeleteCardBlock } from "../EditDeleteCardBlock";
 import { EventItemCardWrapper } from "./styled/EventItemCardWrapper";
 import { LabelFont } from "../fonts";
@@ -26,6 +26,31 @@ const EventItemCard: FC<EventItemComponentProps> = ({
           />
         )}
         <LabelFont>{itemData.label}</LabelFont>
+        {itemData.type === EventTypes.EVENT && (
+          <>
+            <div>
+              <span>Адрес: </span>
+              {itemData.address}
+            </div>
+            <div>
+              <span>Время: </span>
+              {itemData.time}
+            </div>
+          </>
+        )}
+        {itemData.type === EventTypes.EVENT_HOLIDAY && (
+          <>
+            <div>
+              <span>Бюджет: </span>
+              {itemData.budget}
+            </div>
+          </>
+        )}
+        {itemData.type === EventTypes.EVENT_OTHER && (
+          <>
+            <div>{itemData.description}</div>
+          </>
+        )}
       </Card>
     </EventItemCardWrapper>
   );
