@@ -1,9 +1,4 @@
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  EventHandler,
-  FC,
-} from "react";
+import React, { ChangeEvent, FC } from "react";
 import { AddEditEventFormProps } from "./types";
 import { Button, Card, Form, Input, Select } from "antd";
 import { AddEditEventPageFlow } from "../../pages/AddEditEventPage/types";

@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 export enum EventTypes {
   EVENT = "EVENT",
   EVENT_HOLIDAY = "EVENT_HOLIDAY",
