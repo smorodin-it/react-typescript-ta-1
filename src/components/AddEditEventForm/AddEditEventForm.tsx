@@ -1,5 +1,9 @@
 import React, { ChangeEvent, FC } from "react";
-import { AddEditEventFormProps } from "./types";
+import {
+  AddEditEventFormProps,
+  EventFormFieldsNames,
+  EventTypesMap,
+} from "./types";
 import { Button, Card, Form, Input, Select } from "antd";
 import { AddEditEventPageFlow } from "../../pages/AddEditEventPage/types";
 import { requiredField } from "../../utils/functions/antdHelperFunctions";
@@ -7,9 +11,11 @@ import { EventsTypes, EventTypes } from "../EventsComponent/types";
 import {
   setDataFromInput,
   setDataFromSelect,
+  setDataFromTextArea,
 } from "../../utils/functions/setDataFrom";
+import { useTypedSelector } from "../../utils/hooks/useTypedSelector";
 
-const eventTypesMap = {
+const eventTypesMap: EventTypesMap = {
   [EventTypes.EVENT]: "Мероприятие",
   [EventTypes.EVENT_HOLIDAY]: "Праздник",
   [EventTypes.EVENT_OTHER]: "Пометки / Другое",
@@ -23,8 +29,11 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
   pageFlow,
   ...props
 }) => {
-  const onChangeEventTypeHandler = (value: string) => {
-    setDataFromSelect("type", value, setDataObject);
+  const { date } = useTypedSelector((state) => state.eventReducer);
+
+  const onChangeEventTypeHandler = (value: EventTypes) => {
+    const label = dataObject.label;
+    setDataFromSelect<EventsTypes>({ type: value, date, label }, setDataObject);
   };
 
   const onChangeEventInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +43,7 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
   const onChangeEventTextAreaHandler = (
     event: ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setDataFromInput(event, setDataObject);
+    setDataFromTextArea(event, setDataObject);
   };
 
   return (
@@ -48,44 +57,46 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
       <Form {...props} name="event-form" autoComplete="off">
         <Form.Item
           label="Название события"
-          name="label"
+          name={EventFormFieldsNames.LABEL}
           rules={[requiredField()]}
         >
           <Input
             value={dataObject.label}
             onChange={onChangeEventInputHandler}
+            name={EventFormFieldsNames.LABEL}
           />
         </Form.Item>
 
-        <Form.Item label="Тип события" name="type" rules={[requiredField()]}>
+        <Form.Item
+          label="Тип события"
+          name={EventFormFieldsNames.TYPE}
+          rules={[requiredField()]}
+        >
           <Select
             placeholder="Выберите тип события"
             onChange={onChangeEventTypeHandler}
+            value={dataObject.type}
             allowClear
           >
-            <Option value={EventTypes.EVENT}>
-              {eventTypesMap[EventTypes.EVENT]}
-            </Option>
-            <Option value={EventTypes.EVENT_HOLIDAY}>
-              {eventTypesMap[EventTypes.EVENT_HOLIDAY]}
-            </Option>
-            <Option value={EventTypes.EVENT_OTHER}>
-              {eventTypesMap[EventTypes.EVENT_OTHER]}
-            </Option>
+            {Object.keys(eventTypesMap).map((eventType) => (
+              <Option value={eventType}>{eventTypesMap[eventType]}</Option>
+            ))}
           </Select>
         </Form.Item>
 
         {/* Событие */}
         {dataObject.type === EventTypes.EVENT && (
           <>
-            <Form.Item label="Куда идти?" name="address">
+            <Form.Item label="Куда идти?" name={EventFormFieldsNames.ADDRESS}>
               <Input
+                name={EventFormFieldsNames.ADDRESS}
                 value={dataObject.address}
                 onChange={onChangeEventInputHandler}
               />
             </Form.Item>
-            <Form.Item label="Во сколько?" name="time">
+            <Form.Item label="Во сколько?" name={EventFormFieldsNames.TIME}>
               <Input
+                name={EventFormFieldsNames.TIME}
                 type={"time"}
                 value={dataObject.time}
                 onChange={onChangeEventInputHandler}
@@ -97,8 +108,9 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
         {/* Праздник */}
         {dataObject.type === EventTypes.EVENT_HOLIDAY && (
           <>
-            <Form.Item label="Бюджет" name="budget">
+            <Form.Item label="Бюджет" name={EventFormFieldsNames.BUDGET}>
               <Input
+                name={EventFormFieldsNames.BUDGET}
                 type={"number"}
                 value={dataObject.budget}
                 onChange={onChangeEventInputHandler}
@@ -110,8 +122,9 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
         {/* Пометки / Другое */}
         {dataObject.type === EventTypes.EVENT_OTHER && (
           <>
-            <Form.Item label="Описание" name="description">
+            <Form.Item label="Описание" name={EventFormFieldsNames.DESCRIPTION}>
               <TextArea
+                name={EventFormFieldsNames.DESCRIPTION}
                 value={dataObject.description}
                 onChange={onChangeEventTextAreaHandler}
               />

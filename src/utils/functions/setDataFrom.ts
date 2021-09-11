@@ -6,7 +6,22 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
  * @param setObject
  */
 export const setDataFromInput = <T>(
-  event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  event: ChangeEvent<HTMLInputElement>,
+  setObject: Dispatch<SetStateAction<T>>
+) => {
+  setObject((prevState) => ({
+    ...prevState,
+    [event.target.name]: event.target.value,
+  }));
+};
+
+/**
+ * Сохраняет/обновляет стейт с объектом дынных формы из textarea
+ * @param event
+ * @param setObject
+ */
+export const setDataFromTextArea = <T>(
+  event: ChangeEvent<HTMLTextAreaElement>,
   setObject: Dispatch<SetStateAction<T>>
 ) => {
   setObject((prevState) => ({
@@ -17,17 +32,15 @@ export const setDataFromInput = <T>(
 
 /**
  * Сохраняет/обновляет стейт с объектом дынных формы из селекта
- * @param key
- * @param value
+ * @param object
  * @param setObject
  */
 export const setDataFromSelect = <T>(
-  key: string,
-  value: string,
+  object: T,
   setObject: Dispatch<SetStateAction<T>>
 ) => {
   setObject((prevState: T) => ({
     ...prevState,
-    [key]: value,
+    ...object,
   }));
 };

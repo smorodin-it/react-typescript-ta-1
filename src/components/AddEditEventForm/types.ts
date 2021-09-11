@@ -8,3 +8,17 @@ export interface AddEditEventFormProps<T> extends FormProps {
   settings: settingsProp<T>;
   pageFlow: PageFlows;
 }
+
+export interface EventTypesMap {
+  [key: string]: string;
+}
+
+export enum EventFormFieldsNames {
+  LABEL = "label",
+  TYPE = "type",
+  DATE = "date",
+  BUDGET = "budget",
+  ADDRESS = "address",
+  TIME = "time",
+  DESCRIPTION = "description",
+}

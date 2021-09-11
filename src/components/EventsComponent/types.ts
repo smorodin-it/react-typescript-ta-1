@@ -1,5 +1,5 @@
-import { Moment } from "moment";
 import { EditDeleteCardBlockProps } from "../EditDeleteCardBlock/types";
+import { DateType } from "../../redux/reducers/event/types";
 
 export enum EventTypes {
   EVENT = "EVENT",
@@ -8,25 +8,25 @@ export enum EventTypes {
 }
 
 interface BaseEvent {
-  date: Moment;
+  date: DateType;
   type: EventTypes;
   label: string;
 }
 
 export interface EventHoliday extends BaseEvent {
   type: EventTypes.EVENT_HOLIDAY;
-  budget: number;
+  budget?: number;
 }
 
 export interface Event extends BaseEvent {
   type: EventTypes.EVENT;
-  address: string;
-  time: string;
+  address?: string;
+  time?: string;
 }
 
 export interface EventOther extends BaseEvent {
   type: EventTypes.EVENT_OTHER;
-  description: string;
+  description?: string;
 }
 
 export type EventsTypes = EventHoliday | Event | EventOther;

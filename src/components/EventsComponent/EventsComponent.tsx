@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { EventsComponentProps } from "./types";
 import EventItemCard from "./EventItemCard";
-import { Layout } from "antd";
 
 const EventsComponent: FC<EventsComponentProps> = ({
   data,

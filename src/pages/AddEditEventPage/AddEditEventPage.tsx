@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import AddEditEventForm from "../../components/AddEditEventForm/AddEditEventForm";
 import { AddEditEventPageFlow, AddEditEventPageProps } from "./types";
@@ -8,11 +8,20 @@ import { useTypedSelector } from "../../utils/hooks/useTypedSelector";
 import { routes } from "../../navigation/routes";
 
 const AddEditEventPage: FC<AddEditEventPageProps> = ({ flow }) => {
+  const { events, date } = useTypedSelector((state) => state.eventReducer);
   const [event, setEvent] = useState<EventsTypes>({} as EventsTypes);
-  const { events } = useTypedSelector((state) => state.eventReducer);
   const { setEvents } = useActions();
 
   const history = useHistory();
+
+  useEffect(() => {
+    if (date) {
+      setEvent((prevState) => ({
+        ...prevState,
+        date,
+      }));
+    }
+  }, [date]);
 
   const onSubmitFinishHandler = (event: EventsTypes) => {
     const eventsListCopy = [...events];
