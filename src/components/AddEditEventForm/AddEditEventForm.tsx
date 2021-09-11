@@ -3,7 +3,7 @@ import { AddEditEventFormProps } from "./types";
 import { Button, Card, Form, Input, Select } from "antd";
 import { AddEditEventPageFlow } from "../../pages/AddEditEventPage/types";
 import { requiredField } from "../../utils/functions/antdHelperFunctions";
-import { Events, EventTypes } from "../EventsComponent/types";
+import { EventsTypes, EventTypes } from "../EventsComponent/types";
 import {
   setDataFromInput,
   setDataFromSelect,
@@ -16,16 +16,24 @@ const eventTypesMap = {
 };
 
 const { Option } = Select;
+const { TextArea } = Input;
 
-const AddEditEventForm: FC<AddEditEventFormProps<Events>> = ({
+const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
   settings: { dataObject, setDataObject },
   pageFlow,
+  ...props
 }) => {
   const onChangeEventTypeHandler = (value: string) => {
-    setDataFromSelect("eventType", value, setDataObject);
+    setDataFromSelect("type", value, setDataObject);
   };
 
-  const onChangeEventLabelHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeEventInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setDataFromInput(event, setDataObject);
+  };
+
+  const onChangeEventTextAreaHandler = (
+    event: ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setDataFromInput(event, setDataObject);
   };
 
@@ -37,14 +45,7 @@ const AddEditEventForm: FC<AddEditEventFormProps<Events>> = ({
           : "Редактировать событие"
       }
     >
-      <Form
-        name="basic"
-        // labelCol={{ span: 8 }}
-        // wrapperCol={{ span: 16 }}
-        // onFinish={onFinish}
-        // onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
+      <Form {...props} name="event-form" autoComplete="off">
         <Form.Item
           label="Название события"
           name="label"
@@ -52,7 +53,7 @@ const AddEditEventForm: FC<AddEditEventFormProps<Events>> = ({
         >
           <Input
             value={dataObject.label}
-            onChange={onChangeEventLabelHandler}
+            onChange={onChangeEventInputHandler}
           />
         </Form.Item>
 
@@ -73,6 +74,50 @@ const AddEditEventForm: FC<AddEditEventFormProps<Events>> = ({
             </Option>
           </Select>
         </Form.Item>
+
+        {/* Событие */}
+        {dataObject.type === EventTypes.EVENT && (
+          <>
+            <Form.Item label="Куда идти?" name="address">
+              <Input
+                value={dataObject.address}
+                onChange={onChangeEventInputHandler}
+              />
+            </Form.Item>
+            <Form.Item label="Во сколько?" name="time">
+              <Input
+                type={"time"}
+                value={dataObject.time}
+                onChange={onChangeEventInputHandler}
+              />
+            </Form.Item>
+          </>
+        )}
+
+        {/* Праздник */}
+        {dataObject.type === EventTypes.EVENT_HOLIDAY && (
+          <>
+            <Form.Item label="Бюджет" name="budget">
+              <Input
+                type={"number"}
+                value={dataObject.budget}
+                onChange={onChangeEventInputHandler}
+              />
+            </Form.Item>
+          </>
+        )}
+
+        {/* Пометки / Другое */}
+        {dataObject.type === EventTypes.EVENT_OTHER && (
+          <>
+            <Form.Item label="Описание" name="description">
+              <TextArea
+                value={dataObject.description}
+                onChange={onChangeEventTextAreaHandler}
+              />
+            </Form.Item>
+          </>
+        )}
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">

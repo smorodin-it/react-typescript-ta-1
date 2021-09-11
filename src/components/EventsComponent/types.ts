@@ -1,3 +1,5 @@
+import { Moment } from "moment";
+
 export enum EventTypes {
   EVENT = "EVENT",
   EVENT_HOLIDAY = "EVENT_HOLIDAY",
@@ -5,13 +7,14 @@ export enum EventTypes {
 }
 
 interface BaseEvent {
+  date: Moment;
   type: EventTypes;
   label: string;
 }
 
 export interface EventHoliday extends BaseEvent {
   type: EventTypes.EVENT_HOLIDAY;
-  budget: Number;
+  budget: number;
 }
 
 export interface Event extends BaseEvent {
@@ -25,12 +28,12 @@ export interface EventOther extends BaseEvent {
   description: string;
 }
 
-export type Events = EventHoliday | Event | EventOther;
+export type EventsTypes = EventHoliday | Event | EventOther;
 
 export interface EventsComponentProps {
-  data: Events[];
+  data: EventsTypes[];
 }
 
 export interface EventItemComponentProps {
-  itemData: Events;
+  itemData: EventsTypes;
 }

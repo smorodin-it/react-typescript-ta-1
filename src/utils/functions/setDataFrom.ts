@@ -6,7 +6,7 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
  * @param setObject
  */
 export const setDataFromInput = <T>(
-  event: ChangeEvent<HTMLInputElement>,
+  event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   setObject: Dispatch<SetStateAction<T>>
 ) => {
   setObject((prevState) => ({
