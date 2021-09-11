@@ -1,2 +1,2 @@
 export * from "./EventsComponent";
-export * from "./EventItemComponent";
+export * from "./EventItemCard";

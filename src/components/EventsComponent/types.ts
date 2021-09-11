@@ -1,4 +1,5 @@
 import { Moment } from "moment";
+import { EditDeleteCardBlockProps } from "../EditDeleteCardBlock/types";
 
 export enum EventTypes {
   EVENT = "EVENT",
@@ -30,10 +31,10 @@ export interface EventOther extends BaseEvent {
 
 export type EventsTypes = EventHoliday | Event | EventOther;
 
-export interface EventsComponentProps {
+export interface EventsComponentProps extends EditDeleteCardBlockProps {
   data: EventsTypes[];
 }
 
-export interface EventItemComponentProps {
+export interface EventItemComponentProps extends EditDeleteCardBlockProps {
   itemData: EventsTypes;
 }

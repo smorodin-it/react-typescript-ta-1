@@ -1,14 +1,24 @@
 import React, { FC } from "react";
 import { EventsComponentProps } from "./types";
-import EventItemComponent from "./EventItemComponent";
+import EventItemCard from "./EventItemCard";
+import { Layout } from "antd";
 
-const EventsComponent: FC<EventsComponentProps> = ({ data }) => {
+const EventsComponent: FC<EventsComponentProps> = ({
+  data,
+  onClickEdit,
+  onClickDelete,
+}) => {
   return (
-    <ul>
-      {data.map((item) => (
-        <EventItemComponent itemData={item} />
+    <>
+      {data.map((item, index) => (
+        <EventItemCard
+          key={index}
+          itemData={item}
+          onClickEdit={onClickEdit}
+          onClickDelete={onClickDelete}
+        />
       ))}
-    </ul>
+    </>
   );
 };
 

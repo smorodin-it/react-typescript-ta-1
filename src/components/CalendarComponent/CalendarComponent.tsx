@@ -14,7 +14,7 @@ export const CalendarComponent: FC<CalendarComponentProps> = ({ ...props }) => {
 
   return (
     <CalendarWrapperStyled>
-      <Calendar fullscreen={false} {...props} className="mb-3" />
+      <Calendar {...props} fullscreen={false} className="mb-3" />
       <Row justify={"center"}>
         <Button onClick={onClickAddButtonHandler}>Добавить событие</Button>
       </Row>

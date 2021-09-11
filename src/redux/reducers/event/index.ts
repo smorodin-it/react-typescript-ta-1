@@ -2,6 +2,7 @@ import { EventActionsEnum, EventsAction, EventsState } from "./types";
 
 const initialState: EventsState = {
   events: [],
+  date: null,
 };
 
 export const eventReducer = (
@@ -14,6 +15,13 @@ export const eventReducer = (
         ...state,
         events: action.payload,
       };
+
+    case EventActionsEnum.SET_DATE:
+      return {
+        ...state,
+        date: action.payload,
+      };
+
     default:
       return state;
   }
