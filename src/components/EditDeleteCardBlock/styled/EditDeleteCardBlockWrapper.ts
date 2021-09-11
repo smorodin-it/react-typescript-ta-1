@@ -9,5 +9,5 @@ export const EditDeleteCardBlockWrapper = styled.div`
   right: 0;
   top: 0;
 
-  padding: 24px;
+  //padding: 24px;
 `;

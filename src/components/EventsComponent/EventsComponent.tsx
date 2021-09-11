@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { EventsComponentProps } from "./types";
 import EventItemCard from "./EventItemCard";
+import { EventsComponentStyled } from "./styled/EventsComponentStyled";
 
 const EventsComponent: FC<EventsComponentProps> = ({
   data,
@@ -8,7 +9,7 @@ const EventsComponent: FC<EventsComponentProps> = ({
   onClickDelete,
 }) => {
   return (
-    <>
+    <EventsComponentStyled>
       {data.map((item, index) => (
         <EventItemCard
           key={index}
@@ -17,7 +18,7 @@ const EventsComponent: FC<EventsComponentProps> = ({
           onClickDelete={onClickDelete}
         />
       ))}
-    </>
+    </EventsComponentStyled>
   );
 };
 

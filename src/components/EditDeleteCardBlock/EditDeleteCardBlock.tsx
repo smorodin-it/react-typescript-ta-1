@@ -11,8 +11,12 @@ export const EditDeleteCardBlock: FC<EditDeleteCardBlockProps> = ({
 }) => {
   return (
     <EditDeleteCardBlockWrapper {...props}>
-      <Button icon={<EditOutlined />} style={{ marginRight: "24px" }} />
-      <Button icon={<DeleteOutlined />} />
+      <Button
+        type={"text"}
+        icon={<EditOutlined />}
+        style={{ marginRight: "8px" }}
+      />
+      <Button type={"text"} icon={<DeleteOutlined />} />
     </EditDeleteCardBlockWrapper>
   );
 };
