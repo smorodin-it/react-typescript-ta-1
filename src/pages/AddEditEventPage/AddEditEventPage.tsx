@@ -5,6 +5,7 @@ import { AddEditEventPageFlow, AddEditEventPageProps } from "./types";
 import { EventsTypes } from "../../components/EventsComponent/types";
 import { useActions } from "../../utils/hooks/useActions";
 import { useTypedSelector } from "../../utils/hooks/useTypedSelector";
+import { routes } from "../../navigation/routes";
 
 const AddEditEventPage: FC<AddEditEventPageProps> = ({ flow }) => {
   const [event, setEvent] = useState<EventsTypes>({} as EventsTypes);
@@ -17,7 +18,7 @@ const AddEditEventPage: FC<AddEditEventPageProps> = ({ flow }) => {
     const eventsListCopy = [...events];
     eventsListCopy.push(event);
     setEvents(eventsListCopy);
-    history.push("/");
+    history.push(routes.index());
   };
 
   return (
