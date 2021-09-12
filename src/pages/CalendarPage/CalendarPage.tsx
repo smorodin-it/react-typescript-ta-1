@@ -21,7 +21,7 @@ const CalendarPage: FC = () => {
         <CalendarComponent
           events={events}
           onChange={onChangeDateHandler}
-          defaultValue={date}
+          value={date}
         />
       </Col>
       <Col span={12} className="center">
