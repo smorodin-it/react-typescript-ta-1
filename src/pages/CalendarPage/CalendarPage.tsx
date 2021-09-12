@@ -14,20 +14,13 @@ const CalendarPage: FC = () => {
     setDate(date);
   };
 
-  const onClickEditCardHandler = () => {};
-  const onClickDeleteCardHandler = () => {};
-
   return (
     <>
       <Col span={12} className="center">
         <CalendarComponent events={events} onChange={onChangeDateHandler} />
       </Col>
       <Col span={12} className="center">
-        <EventsComponent
-          data={events}
-          onClickEdit={onClickEditCardHandler}
-          onClickDelete={onClickDeleteCardHandler}
-        />
+        <EventsComponent data={events} />
       </Col>
     </>
   );

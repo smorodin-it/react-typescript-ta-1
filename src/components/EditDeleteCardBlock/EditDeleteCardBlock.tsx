@@ -15,8 +15,9 @@ export const EditDeleteCardBlock: FC<EditDeleteCardBlockProps> = ({
         type={"text"}
         icon={<EditOutlined />}
         style={{ marginRight: "8px" }}
+        onClick={onClickEdit}
       />
-      <Button type={"text"} icon={<DeleteOutlined />} />
+      <Button type={"text"} icon={<DeleteOutlined />} onClick={onClickDelete} />
     </EditDeleteCardBlockWrapper>
   );
 };

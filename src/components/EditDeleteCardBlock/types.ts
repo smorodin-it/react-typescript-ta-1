@@ -1,4 +1,6 @@
+import { MouseEventHandler } from "react";
+
 export interface EditDeleteCardBlockProps {
-  onClickEdit: () => void;
-  onClickDelete: () => void;
+  onClickEdit: MouseEventHandler<HTMLElement>;
+  onClickDelete: MouseEventHandler<HTMLElement>;
 }

@@ -1,4 +1,3 @@
-import { EditDeleteCardBlockProps } from "../EditDeleteCardBlock/types";
 import { DateType } from "../../redux/reducers/event/types";
 
 export enum EventTypes {
@@ -8,6 +7,7 @@ export enum EventTypes {
 }
 
 interface BaseEvent {
+  id?: number;
   date: DateType;
   type: EventTypes;
   label: string;
@@ -31,10 +31,10 @@ export interface EventOther extends BaseEvent {
 
 export type EventsTypes = EventHoliday | Event | EventOther;
 
-export interface EventsComponentProps extends EditDeleteCardBlockProps {
+export interface EventsComponentProps {
   data: EventsTypes[];
 }
 
-export interface EventItemComponentProps extends EditDeleteCardBlockProps {
+export interface EventItemComponentProps {
   itemData: EventsTypes;
 }

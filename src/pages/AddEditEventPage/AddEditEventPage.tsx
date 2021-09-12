@@ -25,7 +25,11 @@ const AddEditEventPage: FC<AddEditEventPageProps> = ({ flow }) => {
 
   const onSubmitFinishHandler = (event: EventsTypes) => {
     const eventsListCopy = [...events];
-    eventsListCopy.push(event);
+    const eventId: number = events.length
+      ? // @ts-ignore
+        events[events.length - 1].id + 1
+      : 1;
+    eventsListCopy.push({ ...event, id: eventId });
     setEvents(eventsListCopy);
     history.push(routes.index());
   };

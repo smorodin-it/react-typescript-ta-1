@@ -9,7 +9,7 @@ export const CalendarComponent: FC<CalendarComponentProps> = ({ ...props }) => {
   const history = useHistory();
 
   const onClickAddButtonHandler = () => {
-    history.push(routes.addEditEvent());
+    history.push(routes.addEvent());
   };
 
   return (

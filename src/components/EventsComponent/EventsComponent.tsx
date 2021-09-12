@@ -3,20 +3,11 @@ import { EventsComponentProps } from "./types";
 import EventItemCard from "./EventItemCard";
 import { EventsComponentStyled } from "./styled/EventsComponentStyled";
 
-const EventsComponent: FC<EventsComponentProps> = ({
-  data,
-  onClickEdit,
-  onClickDelete,
-}) => {
+const EventsComponent: FC<EventsComponentProps> = ({ data }) => {
   return (
     <EventsComponentStyled>
-      {data.map((item, index) => (
-        <EventItemCard
-          key={index}
-          itemData={item}
-          onClickEdit={onClickEdit}
-          onClickDelete={onClickDelete}
-        />
+      {data.map((item) => (
+        <EventItemCard key={item.id} itemData={item} />
       ))}
     </EventsComponentStyled>
   );

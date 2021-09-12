@@ -4,13 +4,19 @@ import { EventItemComponentProps, EventTypes } from "./types";
 import { EditDeleteCardBlock } from "../EditDeleteCardBlock";
 import { EventItemCardWrapper } from "./styled/EventItemCardWrapper";
 import { LabelFont } from "../fonts";
+import { useTypedSelector } from "../../utils/hooks/useTypedSelector";
+import { useActions } from "../../utils/hooks/useActions";
 
-const EventItemCard: FC<EventItemComponentProps> = ({
-  itemData,
-  onClickEdit,
-  onClickDelete,
-}) => {
+const EventItemCard: FC<EventItemComponentProps> = ({ itemData }) => {
   const [hovered, setHovered] = useState<boolean>(false);
+  const { events } = useTypedSelector((state) => state.eventReducer);
+  const { setEvents } = useActions();
+
+  const onClickEditHandler = () => {};
+  const onClickDeleteHandler = () => {
+    const eventsFiltered = events.filter((event) => event.id !== itemData.id);
+    setEvents(eventsFiltered);
+  };
 
   return (
     <EventItemCardWrapper>
@@ -21,8 +27,8 @@ const EventItemCard: FC<EventItemComponentProps> = ({
       >
         {hovered && (
           <EditDeleteCardBlock
-            onClickEdit={onClickEdit}
-            onClickDelete={onClickDelete}
+            onClickEdit={onClickEditHandler}
+            onClickDelete={onClickDeleteHandler}
           />
         )}
         <LabelFont>{itemData.label}</LabelFont>
