@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import {
   AddEditEventFormProps,
   EventFormFieldsNames,
@@ -29,19 +29,24 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
   pageFlow,
   ...props
 }) => {
-  const { date } = useTypedSelector((state) => state.eventReducer);
+  const { date, events } = useTypedSelector((state) => state.eventReducer);
+  const [eventId, setEventId] = useState(
+    pageFlow === AddEditEventPageFlow.ADD ? events.length + 1 : dataObject.id
+  );
   const [form] = Form.useForm();
 
   useEffect(() => {
     if (pageFlow === AddEditEventPageFlow.EDIT && dataObject?.id) {
       form.setFieldsValue(dataObject);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [form, pageFlow, dataObject.id]);
 
   const onChangeEventTypeHandler = (value: EventTypes) => {
     const label = dataObject.label;
-    setDataFromSelect<EventsTypes>({ type: value, date, label }, setDataObject);
+    setDataFromSelect<EventsTypes>(
+      { type: value, date, label, id: eventId },
+      setDataObject
+    );
   };
 
   const onChangeEventInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +68,13 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
       }
     >
       <Form {...props} form={form} name="event-form" autoComplete="off">
+        <Form.Item
+          name={EventFormFieldsNames.ID}
+          initialValue={eventId}
+          noStyle
+        >
+          {/*<Input type={"hidden"} />*/}
+        </Form.Item>
         <Form.Item
           label="Название события"
           name={EventFormFieldsNames.LABEL}
@@ -87,7 +99,9 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
             allowClear
           >
             {Object.keys(eventTypesMap).map((eventType) => (
-              <Option value={eventType}>{eventTypesMap[eventType]}</Option>
+              <Option key={eventType} value={eventType}>
+                {eventTypesMap[eventType]}
+              </Option>
             ))}
           </Select>
         </Form.Item>

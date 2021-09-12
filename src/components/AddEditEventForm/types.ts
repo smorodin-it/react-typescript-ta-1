@@ -14,6 +14,7 @@ export interface EventTypesMap {
 }
 
 export enum EventFormFieldsNames {
+  ID = "id",
   LABEL = "label",
   TYPE = "type",
   DATE = "date",

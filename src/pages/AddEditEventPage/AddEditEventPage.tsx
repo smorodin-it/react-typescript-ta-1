@@ -35,12 +35,19 @@ const AddEditEventPage: FC<AddEditEventPageProps> = ({ flow }) => {
   }, []);
 
   const onSubmitFinishHandler = (event: EventsTypes) => {
+    console.log(event);
     const eventsListCopy = [...events];
-    const eventId: number = events.length
-      ? // @ts-ignore
-        events[events.length - 1].id + 1
-      : 1;
-    eventsListCopy.push({ ...event, id: eventId });
+    if (flow === AddEditEventPageFlow.ADD) {
+      // const eventId: number = events.length
+      //   ? // @ts-ignore
+      //     events[events.length - 1].id + 1
+      //   : 1;
+      // eventsListCopy.push({ ...event, id: eventId });
+      eventsListCopy.push(event);
+    } else {
+      const eventIndex = events.findIndex((el) => el.id === event.id);
+      eventsListCopy.splice(eventIndex, 1, event);
+    }
     setEvents(eventsListCopy);
     history.push(routes.index());
   };
