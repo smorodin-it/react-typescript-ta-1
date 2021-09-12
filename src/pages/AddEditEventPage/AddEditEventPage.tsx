@@ -8,7 +8,9 @@ import { useTypedSelector } from "../../utils/hooks/useTypedSelector";
 import { routes } from "../../navigation/routes";
 
 const AddEditEventPage: FC<AddEditEventPageProps> = ({ flow }) => {
-  const { events, date } = useTypedSelector((state) => state.eventReducer);
+  const { events, date, selectedEvent } = useTypedSelector(
+    (state) => state.eventReducer
+  );
   const [event, setEvent] = useState<EventsTypes>({} as EventsTypes);
   const { setEvents } = useActions();
 
@@ -22,6 +24,12 @@ const AddEditEventPage: FC<AddEditEventPageProps> = ({ flow }) => {
       }));
     }
   }, [date]);
+
+  useEffect(() => {
+    if (flow === AddEditEventPageFlow.EDIT) {
+      setEvent(selectedEvent);
+    }
+  }, [flow]);
 
   const onSubmitFinishHandler = (event: EventsTypes) => {
     const eventsListCopy = [...events];

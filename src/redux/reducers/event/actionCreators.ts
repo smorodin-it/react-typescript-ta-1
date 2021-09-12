@@ -1,6 +1,7 @@
 import { EventsTypes } from "../../../components/EventsComponent/types";
 import {
   EventActionsEnum,
+  SetEventAction,
   SetEventDateAction,
   SetEventListAction,
 } from "./types";
@@ -14,5 +15,9 @@ export const EventActionCreators = {
   setDate: (date: Moment): SetEventDateAction => ({
     type: EventActionsEnum.SET_DATE,
     payload: date,
+  }),
+  setSelectedEvent: (event: EventsTypes): SetEventAction => ({
+    type: EventActionsEnum.SET_EVENT,
+    payload: event,
   }),
 };

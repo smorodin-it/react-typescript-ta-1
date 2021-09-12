@@ -1,5 +1,5 @@
 export const routes = {
   index: () => "/",
   addEvent: () => "/add-event",
-  editEvent: () => "/edit-event",
+  editEvent: (eventId: string = ":eventId") => `/edit-event/${eventId}`,
 };

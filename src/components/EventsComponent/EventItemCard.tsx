@@ -6,13 +6,22 @@ import { EventItemCardWrapper } from "./styled/EventItemCardWrapper";
 import { LabelFont } from "../fonts";
 import { useTypedSelector } from "../../utils/hooks/useTypedSelector";
 import { useActions } from "../../utils/hooks/useActions";
+import { useHistory } from "react-router-dom";
+import { routes } from "../../navigation/routes";
 
 const EventItemCard: FC<EventItemComponentProps> = ({ itemData }) => {
   const [hovered, setHovered] = useState<boolean>(false);
   const { events } = useTypedSelector((state) => state.eventReducer);
-  const { setEvents } = useActions();
+  const { setEvents, setSelectedEvent } = useActions();
+  const history = useHistory();
 
-  const onClickEditHandler = () => {};
+  const onClickEditHandler = () => {
+    if (itemData.id) {
+      setSelectedEvent(itemData);
+      history.push(routes.editEvent(itemData.id.toString()));
+    }
+  };
+
   const onClickDeleteHandler = () => {
     const eventsFiltered = events.filter((event) => event.id !== itemData.id);
     setEvents(eventsFiltered);
