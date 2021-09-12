@@ -26,10 +26,13 @@ const AddEditEventPage: FC<AddEditEventPageProps> = ({ flow }) => {
   }, [date]);
 
   useEffect(() => {
-    if (flow === AddEditEventPageFlow.EDIT) {
+    if (flow === AddEditEventPageFlow.EDIT && selectedEvent?.id) {
       setEvent(selectedEvent);
+    } else {
+      history.replace(routes.addEvent());
     }
-  }, [flow]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSubmitFinishHandler = (event: EventsTypes) => {
     const eventsListCopy = [...events];

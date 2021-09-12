@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC } from "react";
+import React, { ChangeEvent, FC, useEffect } from "react";
 import {
   AddEditEventFormProps,
   EventFormFieldsNames,
@@ -30,6 +30,14 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
   ...props
 }) => {
   const { date } = useTypedSelector((state) => state.eventReducer);
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (pageFlow === AddEditEventPageFlow.EDIT && dataObject?.id) {
+      form.setFieldsValue(dataObject);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onChangeEventTypeHandler = (value: EventTypes) => {
     const label = dataObject.label;
@@ -54,16 +62,16 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
           : "Редактировать событие"
       }
     >
-      <Form {...props} name="event-form" autoComplete="off">
+      <Form {...props} form={form} name="event-form" autoComplete="off">
         <Form.Item
           label="Название события"
           name={EventFormFieldsNames.LABEL}
           rules={[requiredField()]}
         >
           <Input
-            value={dataObject.label}
-            onChange={onChangeEventInputHandler}
-            name={EventFormFieldsNames.LABEL}
+          // value={dataObject.label}
+          // onChange={onChangeEventInputHandler}
+          // name={EventFormFieldsNames.LABEL}
           />
         </Form.Item>
 
@@ -75,7 +83,7 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
           <Select
             placeholder="Выберите тип события"
             onChange={onChangeEventTypeHandler}
-            value={dataObject.type}
+            // value={dataObject.type}
             allowClear
           >
             {Object.keys(eventTypesMap).map((eventType) => (
@@ -89,17 +97,17 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
           <>
             <Form.Item label="Куда идти?" name={EventFormFieldsNames.ADDRESS}>
               <Input
-                name={EventFormFieldsNames.ADDRESS}
-                value={dataObject.address}
-                onChange={onChangeEventInputHandler}
+              // name={EventFormFieldsNames.ADDRESS}
+              // value={dataObject.address}
+              // onChange={onChangeEventInputHandler}
               />
             </Form.Item>
             <Form.Item label="Во сколько?" name={EventFormFieldsNames.TIME}>
               <Input
-                name={EventFormFieldsNames.TIME}
+                // name={EventFormFieldsNames.TIME}
                 type={"time"}
-                value={dataObject.time}
-                onChange={onChangeEventInputHandler}
+                // value={dataObject.time}
+                // onChange={onChangeEventInputHandler}
               />
             </Form.Item>
           </>
@@ -110,10 +118,10 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
           <>
             <Form.Item label="Бюджет" name={EventFormFieldsNames.BUDGET}>
               <Input
-                name={EventFormFieldsNames.BUDGET}
+                // name={EventFormFieldsNames.BUDGET}
                 type={"number"}
-                value={dataObject.budget}
-                onChange={onChangeEventInputHandler}
+                // value={dataObject.budget}
+                // onChange={onChangeEventInputHandler}
               />
             </Form.Item>
           </>
@@ -124,9 +132,9 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
           <>
             <Form.Item label="Описание" name={EventFormFieldsNames.DESCRIPTION}>
               <TextArea
-                name={EventFormFieldsNames.DESCRIPTION}
-                value={dataObject.description}
-                onChange={onChangeEventTextAreaHandler}
+              // name={EventFormFieldsNames.DESCRIPTION}
+              // value={dataObject.description}
+              // onChange={onChangeEventTextAreaHandler}
               />
             </Form.Item>
           </>
