@@ -93,10 +93,18 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
         {/* Событие */}
         {dataObject.type === EventTypes.EVENT && (
           <>
-            <Form.Item label="Куда идти?" name={EventFormFieldsNames.ADDRESS}>
+            <Form.Item
+              label="Куда идти?"
+              name={EventFormFieldsNames.ADDRESS}
+              rules={[requiredField()]}
+            >
               <Input />
             </Form.Item>
-            <Form.Item label="Во сколько?" name={EventFormFieldsNames.TIME}>
+            <Form.Item
+              label="Во сколько?"
+              name={EventFormFieldsNames.TIME}
+              rules={[requiredField()]}
+            >
               <Input type={"time"} />
             </Form.Item>
           </>
@@ -105,7 +113,11 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
         {/* Праздник */}
         {dataObject.type === EventTypes.EVENT_HOLIDAY && (
           <>
-            <Form.Item label="Бюджет" name={EventFormFieldsNames.BUDGET}>
+            <Form.Item
+              label="Бюджет"
+              name={EventFormFieldsNames.BUDGET}
+              rules={[requiredField()]}
+            >
               <Input type={"number"} />
             </Form.Item>
           </>
@@ -114,13 +126,20 @@ const AddEditEventForm: FC<AddEditEventFormProps<EventsTypes>> = ({
         {/* Пометки / Другое */}
         {dataObject.type === EventTypes.EVENT_OTHER && (
           <>
-            <Form.Item label="Описание" name={EventFormFieldsNames.DESCRIPTION}>
+            <Form.Item
+              label="Описание"
+              name={EventFormFieldsNames.DESCRIPTION}
+              rules={[requiredField()]}
+            >
               <TextArea />
             </Form.Item>
           </>
         )}
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Form.Item
+          wrapperCol={{ offset: 8, span: 16 }}
+          rules={[requiredField()]}
+        >
           <Button type="primary" htmlType="submit">
             {pageFlow === AddEditEventPageFlow.ADD ? "Добавить" : "Сохранить"}
           </Button>
